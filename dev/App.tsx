@@ -1,28 +1,33 @@
 import type { Component } from 'solid-js'
 import logo from './logo.svg'
 import styles from './App.module.css'
-import { Hello } from 'src'
+import { createForm } from 'src'
 
 const App: Component = () => {
+  const form = createForm({
+    initialValue: {
+      firstName: '',
+      lastName: '',
+    },
+  })
+
   return (
     <div class={styles.App}>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <h1>
-          <Hello></Hello>
-        </h1>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
-      </header>
+      <form.Field name="firstName">
+        {field => (
+          <div>
+            <input value={field.value()} onInput={e => field.setValue(e.target.value)}></input>
+          </div>
+        )}
+      </form.Field>
+      <form.Field name="lastName">
+        {field => (
+          <div>
+            <input value={field.value()} onInput={e => field.setValue(e.target.value)}></input>
+          </div>
+        )}
+      </form.Field>
+      <button onclick={() => form.handleSubmit(console.log, console.warn)}>Submit</button>
     </div>
   )
 }
